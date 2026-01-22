@@ -8,6 +8,7 @@ import LoginPage from "./pages/LoginPage";
 import Dashboard from "./pages/Dashboard";
 import TeamPage from "./pages/TeamPage";
 import OrganizationsPage from "./pages/OrganizationsPage";
+import NetworkPage from "./pages/NetworkPage";
 import OutletsPage from "./pages/OutletsPage";
 import RoutesPage from "./pages/RoutesPage";
 import OrdersPage from "./pages/OrdersPage";
@@ -50,6 +51,7 @@ function AppRoutes() {
       <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
       <Route path="/team" element={<ProtectedRoute allowedRoles={['super_admin', 'admin']}><TeamPage /></ProtectedRoute>} />
       <Route path="/organizations" element={<ProtectedRoute allowedRoles={['super_admin']}><OrganizationsPage /></ProtectedRoute>} />
+      <Route path="/network" element={<ProtectedRoute allowedRoles={['super_admin']}><NetworkPage /></ProtectedRoute>} />
       <Route path="/outlets" element={<ProtectedRoute><OutletsPage /></ProtectedRoute>} />
       <Route path="/routes" element={<ProtectedRoute allowedRoles={['admin', 'employee']}><RoutesPage /></ProtectedRoute>} />
       <Route path="/orders" element={<ProtectedRoute><OrdersPage /></ProtectedRoute>} />

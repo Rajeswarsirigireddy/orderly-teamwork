@@ -16,6 +16,7 @@ import {
   UserCog,
   ChevronLeft,
   ChevronRight,
+  Network,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
@@ -31,6 +32,7 @@ const navItems: NavItem[] = [
   { icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard', roles: ['super_admin', 'admin', 'employee'] },
   { icon: Users, label: 'Team Management', path: '/team', roles: ['super_admin', 'admin'] },
   { icon: Building2, label: 'Organizations', path: '/organizations', roles: ['super_admin'] },
+  { icon: Network, label: 'Network', path: '/network', roles: ['super_admin'] },
   { icon: MapPin, label: 'Outlets', path: '/outlets', roles: ['super_admin', 'admin', 'employee'] },
   { icon: Route, label: 'Routes', path: '/routes', roles: ['admin', 'employee'] },
   { icon: ShoppingCart, label: 'Orders', path: '/orders', roles: ['super_admin', 'admin', 'employee'] },
