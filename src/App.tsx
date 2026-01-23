@@ -15,6 +15,9 @@ import OrdersPage from "./pages/OrdersPage";
 import ProductsPage from "./pages/ProductsPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
 import RolesPage from "./pages/RolesPage";
+import DesignationsPage from "./pages/DesignationsPage";
+import DepartmentsPage from "./pages/DepartmentsPage";
+import PermissionsPage from "./pages/PermissionsPage";
 import SettingsPage from "./pages/SettingsPage";
 import NotFound from "./pages/NotFound";
 
@@ -50,6 +53,10 @@ function AppRoutes() {
       <Route path="/" element={<PublicRoute><LoginPage /></PublicRoute>} />
       <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
       <Route path="/team" element={<ProtectedRoute allowedRoles={['super_admin', 'admin']}><TeamPage /></ProtectedRoute>} />
+      <Route path="/designations" element={<ProtectedRoute allowedRoles={['super_admin', 'admin']}><DesignationsPage /></ProtectedRoute>} />
+      <Route path="/departments" element={<ProtectedRoute allowedRoles={['super_admin', 'admin']}><DepartmentsPage /></ProtectedRoute>} />
+      <Route path="/roles" element={<ProtectedRoute allowedRoles={['super_admin']}><RolesPage /></ProtectedRoute>} />
+      <Route path="/permissions" element={<ProtectedRoute allowedRoles={['super_admin']}><PermissionsPage /></ProtectedRoute>} />
       <Route path="/organizations" element={<ProtectedRoute allowedRoles={['super_admin']}><OrganizationsPage /></ProtectedRoute>} />
       <Route path="/network" element={<ProtectedRoute allowedRoles={['super_admin']}><NetworkPage /></ProtectedRoute>} />
       <Route path="/outlets" element={<ProtectedRoute><OutletsPage /></ProtectedRoute>} />
@@ -57,7 +64,6 @@ function AppRoutes() {
       <Route path="/orders" element={<ProtectedRoute><OrdersPage /></ProtectedRoute>} />
       <Route path="/products" element={<ProtectedRoute allowedRoles={['super_admin', 'admin']}><ProductsPage /></ProtectedRoute>} />
       <Route path="/analytics" element={<ProtectedRoute allowedRoles={['super_admin', 'admin']}><AnalyticsPage /></ProtectedRoute>} />
-      <Route path="/roles" element={<ProtectedRoute allowedRoles={['super_admin']}><RolesPage /></ProtectedRoute>} />
       <Route path="/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
       <Route path="*" element={<NotFound />} />
     </Routes>
