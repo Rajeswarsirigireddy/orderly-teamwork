@@ -57,12 +57,12 @@ import {
 import { toast } from '@/hooks/use-toast';
 
 const teamMembers = [
-  { id: '1', name: 'Michael Chen', email: 'michael@fmcg.com', phone: '+91 98765 43210', role: 'Field Rep', territory: 'Downtown District', status: 'active', visits: 145, sales: 485000 },
-  { id: '2', name: 'Priya Sharma', email: 'priya@fmcg.com', phone: '+91 98765 43211', role: 'Field Rep', territory: 'North Zone', status: 'active', visits: 132, sales: 420000 },
-  { id: '3', name: 'Raj Kumar', email: 'raj@fmcg.com', phone: '+91 98765 43212', role: 'Field Rep', territory: 'South Zone', status: 'inactive', visits: 98, sales: 310000 },
-  { id: '4', name: 'Anita Desai', email: 'anita@fmcg.com', phone: '+91 98765 43213', role: 'Team Lead', territory: 'East Zone', status: 'active', visits: 156, sales: 520000 },
-  { id: '5', name: 'Vikram Singh', email: 'vikram@fmcg.com', phone: '+91 98765 43214', role: 'Field Rep', territory: 'West Zone', status: 'active', visits: 112, sales: 380000 },
-  { id: '6', name: 'Sneha Gupta', email: 'sneha@fmcg.com', phone: '+91 98765 43215', role: 'Field Rep', territory: 'Central Zone', status: 'active', visits: 128, sales: 395000 },
+  { id: '1', name: 'Michael Chen', employeeCode: 'EMP001', designation: 'Sales Executive', regionalOffice: 'Hyderabad', phone: '+91 98765 43210', dob: '1992-05-15', password: '••••••••', employmentType: 'ON ROLL', status: 'active', reportingManagerId: 'MGR001', reportingManagerName: 'Rajesh Kumar' },
+  { id: '2', name: 'Priya Sharma', employeeCode: 'EMP002', designation: 'Area Sales Manager', regionalOffice: 'Bengaluru', phone: '+91 98765 43211', dob: '1988-09-22', password: '••••••••', employmentType: 'ON ROLL', status: 'active', reportingManagerId: 'MGR002', reportingManagerName: 'Sunita Sharma' },
+  { id: '3', name: 'Raj Kumar', employeeCode: 'EMP003', designation: 'Sales Officer', regionalOffice: 'Delhi', phone: '+91 98765 43212', dob: '1995-03-10', password: '••••••••', employmentType: 'OFF ROLL', status: 'inactive', reportingManagerId: 'MGR001', reportingManagerName: 'Rajesh Kumar' },
+  { id: '4', name: 'Anita Desai', employeeCode: 'EMP004', designation: 'Regional Sales Manager', regionalOffice: 'Mumbai', phone: '+91 98765 43213', dob: '1985-11-28', password: '••••••••', employmentType: 'ON ROLL', status: 'active', reportingManagerId: 'MGR003', reportingManagerName: 'Amit Patel' },
+  { id: '5', name: 'Vikram Singh', employeeCode: 'EMP005', designation: 'Sales Promoter', regionalOffice: 'Pune', phone: '+91 98765 43214', dob: '1997-07-04', password: '••••••••', employmentType: 'OFF ROLL', status: 'active', reportingManagerId: 'MGR002', reportingManagerName: 'Sunita Sharma' },
+  { id: '6', name: 'Sneha Gupta', employeeCode: 'EMP006', designation: 'Sr Sales Officer', regionalOffice: 'Kolkatta', phone: '+91 98765 43215', dob: '1990-01-19', password: '••••••••', employmentType: 'OFFICE', status: 'active', reportingManagerId: 'MGR004', reportingManagerName: 'Priya Singh' },
 ];
 
 const designations = [
@@ -573,78 +573,131 @@ export default function TeamPage() {
         </div>
 
         {/* Table */}
-        <div className="rounded-xl bg-card shadow-card overflow-hidden">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Member</TableHead>
-                <TableHead>Contact</TableHead>
-                <TableHead>Territory</TableHead>
-                <TableHead>Role</TableHead>
-                <TableHead>Visits (MTD)</TableHead>
-                <TableHead>Sales (MTD)</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead></TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {teamMembers.map((member) => (
-                <TableRow key={member.id}>
-                  <TableCell>
-                    <div className="flex items-center gap-3">
-                      <Avatar>
-                        <AvatarFallback className="bg-primary/10 text-primary">
-                          {member.name.split(' ').map(n => n[0]).join('')}
-                        </AvatarFallback>
-                      </Avatar>
-                      <span className="font-medium">{member.name}</span>
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                        <Mail className="h-3 w-3" />
-                        {member.email}
-                      </div>
-                      <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                        <Phone className="h-3 w-3" />
-                        {member.phone}
-                      </div>
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-1">
-                      <MapPin className="h-3 w-3 text-muted-foreground" />
-                      {member.territory}
-                    </div>
-                  </TableCell>
-                  <TableCell>{member.role}</TableCell>
-                  <TableCell>{member.visits}</TableCell>
-                  <TableCell>₹{(member.sales / 1000).toFixed(0)}k</TableCell>
-                  <TableCell>
-                    <Badge variant="outline" className={member.status === 'active' ? 'badge-success' : 'bg-muted text-muted-foreground'}>
-                      {member.status}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon">
-                          <MoreVertical className="h-4 w-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem>View Profile</DropdownMenuItem>
-                        <DropdownMenuItem>Edit Details</DropdownMenuItem>
-                        <DropdownMenuItem>View Route</DropdownMenuItem>
-                        <DropdownMenuItem className="text-destructive">Deactivate</DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
+        <div className="rounded-xl bg-card shadow-card overflow-hidden border border-border/50">
+          <ScrollArea className="w-full">
+            <Table>
+              <TableHeader>
+                <TableRow className="bg-muted/30 hover:bg-muted/30">
+                  <TableHead className="w-12 text-center font-semibold">S.No</TableHead>
+                  <TableHead className="font-semibold min-w-[180px]">Name</TableHead>
+                  <TableHead className="font-semibold">Employee Code</TableHead>
+                  <TableHead className="font-semibold min-w-[160px]">Designation</TableHead>
+                  <TableHead className="font-semibold">Regional Office</TableHead>
+                  <TableHead className="font-semibold">Phone</TableHead>
+                  <TableHead className="font-semibold">Date of Birth</TableHead>
+                  <TableHead className="font-semibold">Password</TableHead>
+                  <TableHead className="font-semibold">Employment Type</TableHead>
+                  <TableHead className="font-semibold">Status</TableHead>
+                  <TableHead className="font-semibold">Manager ID</TableHead>
+                  <TableHead className="font-semibold min-w-[140px]">Manager Name</TableHead>
+                  <TableHead className="w-12"></TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {teamMembers.map((member, index) => (
+                  <TableRow key={member.id} className="group hover:bg-muted/20 transition-colors">
+                    <TableCell className="text-center">
+                      <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-primary/10 text-primary text-sm font-medium">
+                        {index + 1}
+                      </span>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex items-center gap-3">
+                        <Avatar className="h-9 w-9 border-2 border-primary/20">
+                          <AvatarFallback className="bg-gradient-to-br from-primary/20 to-primary/5 text-primary font-semibold text-sm">
+                            {member.name.split(' ').map(n => n[0]).join('')}
+                          </AvatarFallback>
+                        </Avatar>
+                        <span className="font-medium text-foreground">{member.name}</span>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <Badge variant="outline" className="font-mono bg-muted/50">
+                        {member.employeeCode}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <span className="text-sm">{member.designation}</span>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex items-center gap-1.5">
+                        <MapPin className="h-3.5 w-3.5 text-primary/60" />
+                        <span className="text-sm">{member.regionalOffice}</span>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex items-center gap-1.5">
+                        <Phone className="h-3.5 w-3.5 text-muted-foreground" />
+                        <span className="text-sm">{member.phone}</span>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex items-center gap-1.5">
+                        <CalendarIcon className="h-3.5 w-3.5 text-muted-foreground" />
+                        <span className="text-sm">{member.dob}</span>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <span className="font-mono text-muted-foreground text-sm">{member.password}</span>
+                    </TableCell>
+                    <TableCell>
+                      <Badge 
+                        variant="outline" 
+                        className={cn(
+                          "text-xs",
+                          member.employmentType === 'ON ROLL' && "bg-success/10 text-success border-success/30",
+                          member.employmentType === 'OFF ROLL' && "bg-warning/10 text-warning border-warning/30",
+                          member.employmentType === 'OFFICE' && "bg-primary/10 text-primary border-primary/30"
+                        )}
+                      >
+                        {member.employmentType}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <Badge 
+                        variant="outline" 
+                        className={cn(
+                          "capitalize",
+                          member.status === 'active' 
+                            ? 'bg-success/10 text-success border-success/30' 
+                            : 'bg-destructive/10 text-destructive border-destructive/30'
+                        )}
+                      >
+                        <span className={cn(
+                          "w-1.5 h-1.5 rounded-full mr-1.5 inline-block",
+                          member.status === 'active' ? "bg-success" : "bg-destructive"
+                        )} />
+                        {member.status}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <Badge variant="secondary" className="font-mono text-xs">
+                        {member.reportingManagerId}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <span className="text-sm text-muted-foreground">{member.reportingManagerName}</span>
+                    </TableCell>
+                    <TableCell>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" size="icon" className="opacity-0 group-hover:opacity-100 transition-opacity">
+                            <MoreVertical className="h-4 w-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end" className="w-48">
+                          <DropdownMenuItem className="cursor-pointer">View Profile</DropdownMenuItem>
+                          <DropdownMenuItem className="cursor-pointer">Edit Details</DropdownMenuItem>
+                          <DropdownMenuItem className="cursor-pointer">View Route</DropdownMenuItem>
+                          <DropdownMenuItem className="cursor-pointer text-destructive">Deactivate</DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </ScrollArea>
         </div>
       </div>
     </DashboardLayout>
