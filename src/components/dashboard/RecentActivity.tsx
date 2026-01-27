@@ -28,7 +28,7 @@ const activities: Activity[] = [
     id: '3',
     type: 'target',
     title: 'Daily target achieved',
-    description: 'North Region hit 105% of target',
+    description: 'Hyderabad HQ hit 105% of target',
     time: '1 hour ago',
   },
   {

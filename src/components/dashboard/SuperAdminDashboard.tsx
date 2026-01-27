@@ -82,13 +82,13 @@ export function SuperAdminDashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <TopPerformers />
         <div className="rounded-xl bg-card p-6 shadow-card">
-          <h3 className="text-lg font-semibold text-foreground mb-4">Regional Performance</h3>
+          <h3 className="text-lg font-semibold text-foreground mb-4">HQ Performance</h3>
           <div className="space-y-4">
             {[
-              { region: 'North India', value: 85, revenue: '₹8.2L' },
-              { region: 'South India', value: 72, revenue: '₹6.8L' },
-              { region: 'West India', value: 68, revenue: '₹5.4L' },
-              { region: 'East India', value: 54, revenue: '₹4.1L' },
+              { region: 'Hyderabad HQ', value: 85, revenue: '₹8.2L' },
+              { region: 'Bengaluru HQ', value: 72, revenue: '₹6.8L' },
+              { region: 'Mumbai HQ', value: 68, revenue: '₹5.4L' },
+              { region: 'Delhi HQ', value: 54, revenue: '₹4.1L' },
             ].map((item) => (
               <div key={item.region} className="space-y-2">
                 <div className="flex items-center justify-between text-sm">

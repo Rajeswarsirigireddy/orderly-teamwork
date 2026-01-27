@@ -20,7 +20,7 @@ export function AdminDashboard() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-foreground">Territory Dashboard</h1>
-          <p className="text-muted-foreground">North Region Performance Overview</p>
+          <p className="text-muted-foreground">HQ Performance Overview</p>
         </div>
         <Badge className="badge-success text-sm py-1 px-3">
           <Target className="h-4 w-4 mr-1" />
