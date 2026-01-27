@@ -23,7 +23,7 @@ const roleOptions: RoleOption[] = [
   {
     role: 'admin',
     title: 'Admin',
-    description: 'Manage team, territories, and view regional analytics',
+    description: 'Manage team, territories, and view HQ analytics',
     icon: UserCog,
     color: 'from-success to-emerald-400',
   },

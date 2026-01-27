@@ -57,12 +57,12 @@ import {
 import { toast } from '@/hooks/use-toast';
 
 const teamMembers = [
-  { id: '1', name: 'Michael Chen', employeeCode: 'EMP001', designation: 'Sales Executive', regionalOffice: 'Hyderabad', phone: '+91 98765 43210', dob: '1992-05-15', password: '••••••••', employmentType: 'ON ROLL', status: 'active', reportingManagerId: 'MGR001', reportingManagerName: 'Rajesh Kumar' },
-  { id: '2', name: 'Priya Sharma', employeeCode: 'EMP002', designation: 'Area Sales Manager', regionalOffice: 'Bengaluru', phone: '+91 98765 43211', dob: '1988-09-22', password: '••••••••', employmentType: 'ON ROLL', status: 'active', reportingManagerId: 'MGR002', reportingManagerName: 'Sunita Sharma' },
-  { id: '3', name: 'Raj Kumar', employeeCode: 'EMP003', designation: 'Sales Officer', regionalOffice: 'Delhi', phone: '+91 98765 43212', dob: '1995-03-10', password: '••••••••', employmentType: 'OFF ROLL', status: 'inactive', reportingManagerId: 'MGR001', reportingManagerName: 'Rajesh Kumar' },
-  { id: '4', name: 'Anita Desai', employeeCode: 'EMP004', designation: 'Regional Sales Manager', regionalOffice: 'Mumbai', phone: '+91 98765 43213', dob: '1985-11-28', password: '••••••••', employmentType: 'ON ROLL', status: 'active', reportingManagerId: 'MGR003', reportingManagerName: 'Amit Patel' },
-  { id: '5', name: 'Vikram Singh', employeeCode: 'EMP005', designation: 'Sales Promoter', regionalOffice: 'Pune', phone: '+91 98765 43214', dob: '1997-07-04', password: '••••••••', employmentType: 'OFF ROLL', status: 'active', reportingManagerId: 'MGR002', reportingManagerName: 'Sunita Sharma' },
-  { id: '6', name: 'Sneha Gupta', employeeCode: 'EMP006', designation: 'Sr Sales Officer', regionalOffice: 'Kolkatta', phone: '+91 98765 43215', dob: '1990-01-19', password: '••••••••', employmentType: 'OFFICE', status: 'active', reportingManagerId: 'MGR004', reportingManagerName: 'Priya Singh' },
+  { id: '1', name: 'Michael Chen', employeeCode: 'EMP001', designation: 'Sales Executive', hq: 'Hyderabad', phone: '+91 98765 43210', dob: '1992-05-15', password: '••••••••', employmentType: 'ON ROLL', status: 'active', reportingManagerId: 'MGR001', reportingManagerName: 'Rajesh Kumar' },
+  { id: '2', name: 'Priya Sharma', employeeCode: 'EMP002', designation: 'Area Sales Manager', hq: 'Bengaluru', phone: '+91 98765 43211', dob: '1988-09-22', password: '••••••••', employmentType: 'ON ROLL', status: 'active', reportingManagerId: 'MGR002', reportingManagerName: 'Sunita Sharma' },
+  { id: '3', name: 'Raj Kumar', employeeCode: 'EMP003', designation: 'Sales Officer', hq: 'Delhi', phone: '+91 98765 43212', dob: '1995-03-10', password: '••••••••', employmentType: 'OFF ROLL', status: 'inactive', reportingManagerId: 'MGR001', reportingManagerName: 'Rajesh Kumar' },
+  { id: '4', name: 'Anita Desai', employeeCode: 'EMP004', designation: 'Sales Manager', hq: 'Mumbai', phone: '+91 98765 43213', dob: '1985-11-28', password: '••••••••', employmentType: 'ON ROLL', status: 'active', reportingManagerId: 'MGR003', reportingManagerName: 'Amit Patel' },
+  { id: '5', name: 'Vikram Singh', employeeCode: 'EMP005', designation: 'Sales Promoter', hq: 'Pune', phone: '+91 98765 43214', dob: '1997-07-04', password: '••••••••', employmentType: 'OFF ROLL', status: 'active', reportingManagerId: 'MGR002', reportingManagerName: 'Sunita Sharma' },
+  { id: '6', name: 'Sneha Gupta', employeeCode: 'EMP006', designation: 'Sr Sales Officer', hq: 'Kolkata', phone: '+91 98765 43215', dob: '1990-01-19', password: '••••••••', employmentType: 'OFFICE', status: 'active', reportingManagerId: 'MGR004', reportingManagerName: 'Priya Singh' },
 ];
 
 const designations = [
@@ -91,17 +91,17 @@ const roles = [
   'NHP USER',
 ];
 
-const regionalOffices = [
+const hqLocations = [
   'Hyderabad',
   'Bengaluru',
-  'Kolkatta',
+  'Kolkata',
   'Pune',
   'Mumbai',
-  'Andhra Pradesh',
   'Delhi',
-  'Telangana',
+  'Chennai',
   'Lucknow',
-  'UP',
+  'Ahmedabad',
+  'Jaipur',
 ];
 
 const employmentTypes = ['ON ROLL', 'OFF ROLL', 'OFFICE'];
@@ -126,7 +126,7 @@ const employeeFormSchema = z.object({
   confirmPassword: z.string().min(8, 'Confirm password is required'),
   designation: z.string().min(1, 'Designation is required'),
   role: z.string().min(1, 'Role is required'),
-  regionalOffice: z.string().min(1, 'Regional office is required'),
+  hq: z.string().min(1, 'HQ is required'),
   employmentType: z.string().min(1, 'Employment type is required'),
   reportingManagerId: z.string().min(1, 'Reporting manager ID is required'),
   reportingManagerName: z.string().min(1, 'Reporting manager name is required'),
@@ -152,7 +152,7 @@ export default function TeamPage() {
       confirmPassword: '',
       designation: '',
       role: '',
-      regionalOffice: '',
+      hq: '',
       employmentType: '',
       reportingManagerId: '',
       reportingManagerName: '',
@@ -439,22 +439,22 @@ export default function TeamPage() {
                         )}
                       />
 
-                      {/* Regional Office */}
+                      {/* HQ */}
                       <FormField
                         control={form.control}
-                        name="regionalOffice"
+                        name="hq"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Regional Office *</FormLabel>
+                            <FormLabel>HQ *</FormLabel>
                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                               <FormControl>
                                 <SelectTrigger>
-                                  <SelectValue placeholder="Select regional office" />
+                                  <SelectValue placeholder="Select HQ" />
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent>
-                                {regionalOffices.map((office) => (
-                                  <SelectItem key={office} value={office}>{office}</SelectItem>
+                                {hqLocations.map((hq) => (
+                                  <SelectItem key={hq} value={hq}>{hq}</SelectItem>
                                 ))}
                               </SelectContent>
                             </Select>
@@ -582,7 +582,7 @@ export default function TeamPage() {
                   <TableHead className="font-semibold min-w-[180px]">Name</TableHead>
                   <TableHead className="font-semibold">Employee Code</TableHead>
                   <TableHead className="font-semibold min-w-[160px]">Designation</TableHead>
-                  <TableHead className="font-semibold">Regional Office</TableHead>
+                  <TableHead className="font-semibold">HQ</TableHead>
                   <TableHead className="font-semibold">Phone</TableHead>
                   <TableHead className="font-semibold">Date of Birth</TableHead>
                   <TableHead className="font-semibold">Password</TableHead>
@@ -622,7 +622,7 @@ export default function TeamPage() {
                     <TableCell>
                       <div className="flex items-center gap-1.5">
                         <MapPin className="h-3.5 w-3.5 text-primary/60" />
-                        <span className="text-sm">{member.regionalOffice}</span>
+                        <span className="text-sm">{member.hq}</span>
                       </div>
                     </TableCell>
                     <TableCell>

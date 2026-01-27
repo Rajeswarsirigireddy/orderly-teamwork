@@ -83,7 +83,7 @@ export default function SettingsPage() {
                 </div>
                 <div className="space-y-2 md:col-span-2">
                   <Label htmlFor="territory">Territory</Label>
-                  <Input id="territory" defaultValue={user?.territory || 'All Regions'} disabled />
+                  <Input id="territory" defaultValue={user?.territory || 'All HQ'} disabled />
                 </div>
               </div>
 

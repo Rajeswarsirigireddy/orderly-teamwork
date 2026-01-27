@@ -34,7 +34,7 @@ const mockUsers: Record<UserRole, User> = {
     email: 'sarah@fmcgsales.com',
     role: 'admin',
     avatar: 'SM',
-    territory: 'North Region',
+    territory: 'North HQ',
   },
   employee: {
     id: '3',

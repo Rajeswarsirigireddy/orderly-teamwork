@@ -42,12 +42,12 @@ const categoryData = [
   { name: 'Others', value: 8, color: 'hsl(215, 15%, 60%)' },
 ];
 
-const regionData = [
-  { region: 'North', sales: 82, target: 100 },
-  { region: 'South', sales: 68, target: 100 },
-  { region: 'East', sales: 54, target: 100 },
-  { region: 'West', sales: 75, target: 100 },
-  { region: 'Central', sales: 48, target: 100 },
+const hqData = [
+  { hq: 'Hyderabad', sales: 82, target: 100 },
+  { hq: 'Bengaluru', sales: 68, target: 100 },
+  { hq: 'Mumbai', sales: 54, target: 100 },
+  { hq: 'Delhi', sales: 75, target: 100 },
+  { hq: 'Chennai', sales: 48, target: 100 },
 ];
 
 const topProducts = [
@@ -162,15 +162,15 @@ export default function AnalyticsPage() {
 
         {/* Charts Row 2 */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Region Performance */}
+          {/* HQ Performance */}
           <div className="rounded-xl bg-card p-6 shadow-card">
-            <h3 className="text-lg font-semibold text-foreground mb-4">Region Performance</h3>
+            <h3 className="text-lg font-semibold text-foreground mb-4">HQ Performance</h3>
             <div className="h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={regionData} layout="vertical">
+                <BarChart data={hqData} layout="vertical">
                   <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} />
                   <XAxis type="number" domain={[0, 100]} tickFormatter={(v) => `${v}%`} />
-                  <YAxis type="category" dataKey="region" axisLine={false} tickLine={false} />
+                  <YAxis type="category" dataKey="hq" axisLine={false} tickLine={false} />
                   <Tooltip formatter={(value) => [`${value}%`, '']} />
                   <Bar dataKey="sales" fill="hsl(199, 89%, 38%)" radius={[0, 4, 4, 0]} />
                 </BarChart>
