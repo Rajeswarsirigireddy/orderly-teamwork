@@ -21,6 +21,8 @@ import {
   Award,
   Building,
   Shield,
+  Store,
+  ClipboardCheck,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
@@ -60,7 +62,15 @@ const navItems: NavItem[] = [
   },
   { icon: Building2, label: 'Organizations', path: '/organizations', roles: ['super_admin'] },
   { icon: Network, label: 'Network', path: '/network', roles: ['super_admin'] },
-  { icon: MapPin, label: 'Outlets', path: '/outlets', roles: ['super_admin', 'admin', 'employee'] },
+  { 
+    icon: MapPin, 
+    label: 'Outlets', 
+    roles: ['super_admin', 'admin', 'employee'],
+    subItems: [
+      { icon: Store, label: 'Total Outlets', path: '/outlets' },
+      { icon: ClipboardCheck, label: 'Beat Productive Calls', path: '/beat-productive-calls' },
+    ]
+  },
   { icon: Route, label: 'Routes', path: '/routes', roles: ['admin', 'employee'] },
   { icon: ShoppingCart, label: 'Orders', path: '/orders', roles: ['super_admin', 'admin', 'employee'] },
   { icon: Package, label: 'Products', path: '/products', roles: ['super_admin', 'admin'] },

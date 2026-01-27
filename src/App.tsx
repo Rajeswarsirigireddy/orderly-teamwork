@@ -10,6 +10,7 @@ import TeamPage from "./pages/TeamPage";
 import OrganizationsPage from "./pages/OrganizationsPage";
 import NetworkPage from "./pages/NetworkPage";
 import OutletsPage from "./pages/OutletsPage";
+import BeatProductiveCallsPage from "./pages/BeatProductiveCallsPage";
 import RoutesPage from "./pages/RoutesPage";
 import OrdersPage from "./pages/OrdersPage";
 import ProductsPage from "./pages/ProductsPage";
@@ -60,6 +61,7 @@ function AppRoutes() {
       <Route path="/organizations" element={<ProtectedRoute allowedRoles={['super_admin']}><OrganizationsPage /></ProtectedRoute>} />
       <Route path="/network" element={<ProtectedRoute allowedRoles={['super_admin']}><NetworkPage /></ProtectedRoute>} />
       <Route path="/outlets" element={<ProtectedRoute><OutletsPage /></ProtectedRoute>} />
+      <Route path="/beat-productive-calls" element={<ProtectedRoute><BeatProductiveCallsPage /></ProtectedRoute>} />
       <Route path="/routes" element={<ProtectedRoute allowedRoles={['admin', 'employee']}><RoutesPage /></ProtectedRoute>} />
       <Route path="/orders" element={<ProtectedRoute><OrdersPage /></ProtectedRoute>} />
       <Route path="/products" element={<ProtectedRoute allowedRoles={['super_admin', 'admin']}><ProductsPage /></ProtectedRoute>} />
