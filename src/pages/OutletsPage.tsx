@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -11,7 +12,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-import { Search, Plus, MapPin, Phone, Store, Filter, CheckCircle, XCircle, Building2 } from 'lucide-react';
+import { Search, Plus, MapPin, Phone, Store, Eye, Pencil, Trash2, CheckCircle, XCircle, Building2 } from 'lucide-react';
 import {
   Select,
   SelectContent,
@@ -19,8 +20,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { OutletFormModal, type Outlet, type OutletFormData } from '@/components/outlets/OutletFormModal';
+import { ViewOutletDialog } from '@/components/outlets/ViewOutletDialog';
+import { DeleteOutletDialog } from '@/components/outlets/DeleteOutletDialog';
+import { toast } from '@/hooks/use-toast';
 
-const outlets = [
+const initialOutlets: Outlet[] = [
   { 
     id: '1', 
     hq: 'Hyderabad', 
@@ -229,9 +234,77 @@ const stockColors: Record<string, string> = {
 };
 
 export default function OutletsPage() {
+  const [outlets, setOutlets] = useState<Outlet[]>(initialOutlets);
+  const [formModalOpen, setFormModalOpen] = useState(false);
+  const [viewDialogOpen, setViewDialogOpen] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [selectedOutlet, setSelectedOutlet] = useState<Outlet | null>(null);
+  const [formMode, setFormMode] = useState<'create' | 'edit'>('create');
+
   const totalOutlets = outlets.length;
   const activeOutlets = outlets.filter(o => o.status === 'active').length;
   const inactiveOutlets = outlets.filter(o => o.status === 'inactive').length;
+
+  const handleAddOutlet = () => {
+    setSelectedOutlet(null);
+    setFormMode('create');
+    setFormModalOpen(true);
+  };
+
+  const handleEditOutlet = (outlet: Outlet) => {
+    setSelectedOutlet(outlet);
+    setFormMode('edit');
+    setFormModalOpen(true);
+  };
+
+  const handleViewOutlet = (outlet: Outlet) => {
+    setSelectedOutlet(outlet);
+    setViewDialogOpen(true);
+  };
+
+  const handleDeleteOutlet = (outlet: Outlet) => {
+    setSelectedOutlet(outlet);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleFormSubmit = (data: OutletFormData) => {
+    if (formMode === 'create') {
+      const newOutlet: Outlet = {
+        ...data,
+        id: String(Date.now()),
+        addedOn: new Date().toISOString().split('T')[0],
+        latestUpdatedOn: new Date().toISOString().split('T')[0],
+      };
+      setOutlets([...outlets, newOutlet]);
+      toast({
+        title: 'Outlet Added',
+        description: `${data.outlet} has been added successfully.`,
+      });
+    } else if (selectedOutlet) {
+      setOutlets(outlets.map(o => 
+        o.id === selectedOutlet.id 
+          ? { ...o, ...data, latestUpdatedOn: new Date().toISOString().split('T')[0] }
+          : o
+      ));
+      toast({
+        title: 'Outlet Updated',
+        description: `${data.outlet} has been updated successfully.`,
+      });
+    }
+  };
+
+  const handleDeleteConfirm = () => {
+    if (selectedOutlet) {
+      setOutlets(outlets.filter(o => o.id !== selectedOutlet.id));
+      toast({
+        title: 'Outlet Deleted',
+        description: `${selectedOutlet.outlet} has been deleted.`,
+        variant: 'destructive',
+      });
+      setDeleteDialogOpen(false);
+      setSelectedOutlet(null);
+    }
+  };
 
   return (
     <DashboardLayout>
@@ -242,7 +315,7 @@ export default function OutletsPage() {
             <h1 className="text-2xl font-bold text-foreground">Outlets</h1>
             <p className="text-muted-foreground">Manage retail outlets and stores</p>
           </div>
-          <Button className="btn-gradient-primary">
+          <Button className="btn-gradient-primary" onClick={handleAddOutlet}>
             <Plus className="h-4 w-4 mr-2" />
             Add Outlet
           </Button>
@@ -334,10 +407,11 @@ export default function OutletsPage() {
         {/* Table */}
         <div className="rounded-xl bg-card shadow-card border border-border/50 overflow-hidden">
           <ScrollArea className="w-full">
-            <div className="min-w-[2800px]">
+            <div className="min-w-[3000px]">
               <Table>
                 <TableHeader>
                   <TableRow className="bg-muted/30 hover:bg-muted/30">
+                    <TableHead className="font-semibold text-foreground whitespace-nowrap sticky left-0 bg-muted/30 z-10">Actions</TableHead>
                     <TableHead className="font-semibold text-foreground whitespace-nowrap">HQ</TableHead>
                     <TableHead className="font-semibold text-foreground whitespace-nowrap">Point Routes</TableHead>
                     <TableHead className="font-semibold text-foreground whitespace-nowrap">SO Name</TableHead>
@@ -364,6 +438,19 @@ export default function OutletsPage() {
                 <TableBody>
                   {outlets.map((outlet) => (
                     <TableRow key={outlet.id} className="group hover:bg-muted/20 transition-colors">
+                      <TableCell className="whitespace-nowrap sticky left-0 bg-card group-hover:bg-muted/20 z-10">
+                        <div className="flex items-center gap-1">
+                          <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => handleViewOutlet(outlet)}>
+                            <Eye className="h-4 w-4 text-muted-foreground hover:text-primary" />
+                          </Button>
+                          <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => handleEditOutlet(outlet)}>
+                            <Pencil className="h-4 w-4 text-muted-foreground hover:text-primary" />
+                          </Button>
+                          <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => handleDeleteOutlet(outlet)}>
+                            <Trash2 className="h-4 w-4 text-muted-foreground hover:text-destructive" />
+                          </Button>
+                        </div>
+                      </TableCell>
                       <TableCell className="whitespace-nowrap">
                         <div className="flex items-center gap-2">
                           <MapPin className="h-4 w-4 text-primary" />
@@ -446,6 +533,28 @@ export default function OutletsPage() {
           </ScrollArea>
         </div>
       </div>
+
+      {/* Modals */}
+      <OutletFormModal
+        open={formModalOpen}
+        onOpenChange={setFormModalOpen}
+        outlet={selectedOutlet}
+        onSubmit={handleFormSubmit}
+        mode={formMode}
+      />
+
+      <ViewOutletDialog
+        open={viewDialogOpen}
+        onOpenChange={setViewDialogOpen}
+        outlet={selectedOutlet}
+      />
+
+      <DeleteOutletDialog
+        open={deleteDialogOpen}
+        onOpenChange={setDeleteDialogOpen}
+        outlet={selectedOutlet}
+        onConfirm={handleDeleteConfirm}
+      />
     </DashboardLayout>
   );
 }
